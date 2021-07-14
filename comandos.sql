@@ -33,3 +33,31 @@ DELETE FROM people WHERE person_id = 1;
 
 --Consultar
 SELECT first_name,last_name FROM people;
+
+---------------------------------------------------------------------
+
+--Eliminar tabla
+DROP TABLE `platziblog`.`people`;
+
+CREATE TABLE `platziblog`.`categorias` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre_categoria` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`id`));
+
+
+CREATE TABLE `platziblog`.`etiqueta` (
+  `id` INT NOT NULL,
+  `nombre_etiqueta` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`id`));
+
+CREATE TABLE `platziblog`.`usuarios` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `login` VARCHAR(30) NOT NULL,
+  `password` VARCHAR(32) NOT NULL,
+  `nickname` VARCHAR(40) NOT NULL,
+  `email` VARCHAR(40) NOT NULL,
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  PRIMARY KEY (`id`));
+
+
+
