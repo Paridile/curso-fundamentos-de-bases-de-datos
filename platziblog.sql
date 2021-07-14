@@ -56,6 +56,35 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish2_ci;
 
+
+-- -----------------------------------------------------
+-- Table `platziblog`.`posts`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `platziblog`.`posts` (
+  `id` INT(11) NOT NULL,
+  `titulo` VARCHAR(45) NULL DEFAULT NULL,
+  `fecha_publicacion` TIMESTAMP NULL DEFAULT NULL,
+  `contenido` TEXT NOT NULL,
+  `status` CHAR(8) NULL DEFAULT 'activo',
+  `usuario_id` INT(11) NOT NULL,
+  `categoria_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `post_usuarios_idx` (`usuario_id` ASC) VISIBLE,
+  INDEX `post_categorias_idx` (`categoria_id` ASC) VISIBLE,
+  CONSTRAINT `post_categorias`
+    FOREIGN KEY (`categoria_id`)
+    REFERENCES `platziblog`.`categorias` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE,
+  CONSTRAINT `post_usuarios`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `platziblog`.`usuarios` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
 USE `platziblog` ;
 
 -- -----------------------------------------------------

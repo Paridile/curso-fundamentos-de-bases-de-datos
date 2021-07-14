@@ -59,5 +59,38 @@ CREATE TABLE `platziblog`.`usuarios` (
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
   PRIMARY KEY (`id`));
 
+CREATE TABLE `platziblog`.`posts` (
+  `id` INT NOT NULL,
+  `titulo` VARCHAR(45) NULL,
+  `fecha_publicacion` TIMESTAMP NULL,
+  `contenido` TEXT NOT NULL,
+  `status` CHAR(8) NULL DEFAULT 'activo',
+  `usuario_id` INT NOT NULL,
+  `categoria_id` INT NOT NULL,
+  PRIMARY KEY (`id`));
+
+
+ALTER TABLE `platziblog`.`posts` 
+ADD INDEX `post_usuarios_idx` (`usuario_id` ASC);
+;
+ALTER TABLE `platziblog`.`posts` 
+ADD CONSTRAINT `post_usuarios`
+  FOREIGN KEY (`usuario_id`)
+  REFERENCES `platziblog`.`usuarios` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE CASCADE;
+
+
+ALTER TABLE `platziblog`.`posts` 
+ADD INDEX `post_categorias_idx` (`categoria_id` ASC);
+;
+ALTER TABLE `platziblog`.`posts` 
+ADD CONSTRAINT `post_categorias`
+  FOREIGN KEY (`categoria_id`)
+  REFERENCES `platziblog`.`categorias` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE CASCADE;
+
+
 
 
