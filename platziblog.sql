@@ -18,17 +18,70 @@ CREATE SCHEMA IF NOT EXISTS `platziblog` DEFAULT CHARACTER SET utf8 COLLATE utf8
 USE `platziblog` ;
 
 -- -----------------------------------------------------
--- Table `platziblog`.`people`
+-- Table `platziblog`.`categorias`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `platziblog`.`people` (
-  `person_id` INT(11) NOT NULL AUTO_INCREMENT,
-  `last_name` VARCHAR(255) NULL DEFAULT NULL,
-  `first_name` VARCHAR(255) NULL DEFAULT NULL,
-  `address` VARCHAR(255) NULL DEFAULT NULL,
-  `city` VARCHAR(255) NULL DEFAULT NULL,
-  PRIMARY KEY (`person_id`))
+CREATE TABLE IF NOT EXISTS `platziblog`.`categorias` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `nombre_categoria` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB
-AUTO_INCREMENT = 4
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `platziblog`.`etiqueta`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `platziblog`.`etiqueta` (
+  `id` INT(11) NOT NULL,
+  `nombre_etiqueta` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `platziblog`.`usuarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `platziblog`.`usuarios` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `login` VARCHAR(30) NOT NULL,
+  `password` VARCHAR(32) NOT NULL,
+  `nickname` VARCHAR(40) NOT NULL,
+  `email` VARCHAR(40) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_spanish2_ci;
+
+
+-- -----------------------------------------------------
+-- Table `platziblog`.`posts`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `platziblog`.`posts` (
+  `id` INT(11) NOT NULL,
+  `titulo` VARCHAR(45) NULL DEFAULT NULL,
+  `fecha_publicacion` TIMESTAMP NULL DEFAULT NULL,
+  `contenido` TEXT NOT NULL,
+  `status` CHAR(8) NULL DEFAULT 'activo',
+  `usuario_id` INT(11) NOT NULL,
+  `categoria_id` INT(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `post_usuarios_idx` (`usuario_id` ASC) VISIBLE,
+  INDEX `post_categorias_idx` (`categoria_id` ASC) VISIBLE,
+  CONSTRAINT `post_categorias`
+    FOREIGN KEY (`categoria_id`)
+    REFERENCES `platziblog`.`categorias` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE,
+  CONSTRAINT `post_usuarios`
+    FOREIGN KEY (`usuario_id`)
+    REFERENCES `platziblog`.`usuarios` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_spanish2_ci;
 
