@@ -1,5 +1,3 @@
---Consultar
-SELECT * FROM people;
 
 --Modificar tabla - Agregar columna
 ALTER TABLE `platziblog`.`people` 

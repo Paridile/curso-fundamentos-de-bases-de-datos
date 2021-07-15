@@ -93,3 +93,26 @@ SELECT MONTHNAME(fecha_publicacion) AS post_month, count(*) AS post_quantity  FR
 
 SELECT MONTHNAME(fecha_publicacion) AS post_month, estatus, count(*) AS post_quantity  FROM posts GROUP BY  post_month,estatus;
 
+
+--------------------------------------------------------------------------------
+
+--ORDER BY / HAVING
+
+SELECT * FROM posts ORDER BY fecha_publicacion ASC;
+SELECT * FROM posts ORDER BY fecha_publicacion DESC;
+
+SELECT * FROM posts ORDER BY titulo;
+SELECT * FROM posts ORDER BY id;
+
+SELECT * FROM posts ORDER BY id;
+
+SELECT * FROM posts ORDER BY fecha_publicacion LIMIT 5;
+
+SELECT MONTHNAME(fecha_publicacion) as post_month, estatus, COUNT(*) AS post_quantity 
+FROM posts GROUP BY estatus , post_month HAVING post_quantity > 1 ORDER BY post_month;
+
+SELECT	MONTHNAME(fecha_publicacion) AS post_month, estatus, COUNT(*) AS post_quantity
+FROM		posts
+GROUP BY estatus, post_month
+HAVING estatus = 'activo'
+ORDER BY post_month;
