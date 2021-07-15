@@ -79,3 +79,17 @@ SELECT * FROM posts WHERE usuario_id IS NOT NULL AND categoria_id IS NOT NULL;
 
 SELECT * FROM posts WHERE usuario_id IS NOT NULL AND estatus = 'activo' AND id < 50 AND categoria_id = 2 AND YEAR(fecha_publicacion)='2025';
 
+-------------------------------------------------------------------------------
+
+--Group by
+
+SELECT estatus, COUNT(*) AS post_quantity FROM posts GROUP BY estatus;
+
+SELECT estatus, SUM(id)  FROM posts GROUP BY estatus;
+
+SELECT YEAR(fecha_publicacion) AS post_year, count(*) AS post_quantity  FROM posts GROUP BY post_year;
+
+SELECT MONTHNAME(fecha_publicacion) AS post_month, count(*) AS post_quantity  FROM posts GROUP BY post_month ORDER BY post_quantity DESC;
+
+SELECT MONTHNAME(fecha_publicacion) AS post_month, estatus, count(*) AS post_quantity  FROM posts GROUP BY  post_month,estatus;
+
