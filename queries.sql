@@ -162,4 +162,31 @@ SELECT * FROM etiquetas left join posts_etiquetas
 ON etiquetas.id = posts_etiquetas.etiqueta_id
 WHERE posts_etiquetas.etiqueta_id IS NULL;
 
+------------------------------------------------------------------------------------------
+
+SELECT c.nombre ,count(*) AS cantidad_de_posts 
+FROM categorias as c inner join posts as p
+on c.id = p.categoria_id
+group by c.nombre
+order by cantidad_de_posts desc limit 3;
+
+SELECT u.nickname, COUNT(*) AS cant_posts
+FROM    usuarios AS u
+    INNER JOIN posts AS p on u.id = p.usuario_id
+GROUP BY u.nickname
+ORDER BY cant_posts DESC
+LIMIT 3;
+
+SELECT u.nickname, COUNT(*) AS cant_posts, group_concat(nombre) as categorias
+FROM    usuarios AS u
+    INNER JOIN posts AS p on u.id = p.usuario_id
+    inner join categorias AS c on c.id = p.categoria_id
+GROUP BY u.nickname
+ORDER BY cant_posts DESC
+LIMIT 3;
+
+SELECT * from usuarios
+left join posts on usuarios.id = posts.usuario_id
+where posts.usuario_id is null
+
 
