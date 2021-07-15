@@ -130,3 +130,36 @@ ORDER BY new_table_projection.date;
 SELECT * FROM posts WHERE fecha_publicacion = (
 	SELECT MAX(fecha_publicacion) FROM posts
 );
+
+
+--------------------------------------------
+
+SELECT titulo, count(*) as total_etiquetas from posts, posts_etiquetas 
+Where posts.id = posts_etiquetas.post_id 
+GROUP BY titulo ORDER BY total_etiquetas DESC;
+
+--------------------------------------------------------------------------------
+
+SELECT titulo, count(*) as total_etiquetas from posts, posts_etiquetas 
+Where posts.id = posts_etiquetas.post_id 
+GROUP BY titulo ORDER BY total_etiquetas DESC;
+
+SELECT  posts.titulo, GROUP_CONCAT(etiquetas.nombre) AS num_etiquetas
+FROM    posts
+    INNER JOIN posts_etiquetas ON posts.id = posts_etiquetas.post_id
+    INNER JOIN etiquetas ON etiquetas.id = posts_etiquetas.etiqueta_id
+GROUP BY posts.titulo
+ORDER BY num_etiquetas DESC;
+
+SELECT  posts.titulo, COUNT(*) AS num_etiquetas
+FROM    posts
+    INNER JOIN posts_etiquetas ON posts.id = posts_etiquetas.post_id
+    INNER JOIN etiquetas ON etiquetas.id = posts_etiquetas.etiqueta_id
+GROUP BY posts.titulo
+ORDER BY num_etiquetas DESC;
+
+SELECT * FROM etiquetas left join posts_etiquetas 
+ON etiquetas.id = posts_etiquetas.etiqueta_id
+WHERE posts_etiquetas.etiqueta_id IS NULL;
+
+
