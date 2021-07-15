@@ -14,90 +14,118 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema platziblog
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `platziblog` DEFAULT CHARACTER SET utf8 COLLATE utf8_spanish2_ci ;
+CREATE SCHEMA IF NOT EXISTS `platziblog` DEFAULT CHARACTER SET utf8 ;
 USE `platziblog` ;
 
 -- -----------------------------------------------------
 -- Table `platziblog`.`categorias`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `platziblog`.`categorias` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `idCategoria` INT(11) NOT NULL,
   `nombre_categoria` VARCHAR(30) NOT NULL,
-  PRIMARY KEY (`id`))
+  PRIMARY KEY (`idCategoria`))
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_spanish2_ci;
-
-
--- -----------------------------------------------------
--- Table `platziblog`.`etiqueta`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `platziblog`.`etiqueta` (
-  `id` INT(11) NOT NULL,
-  `nombre_etiqueta` VARCHAR(30) NOT NULL,
-  PRIMARY KEY (`id`))
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_spanish2_ci;
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `platziblog`.`usuarios`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `platziblog`.`usuarios` (
-  `id` INT(11) NOT NULL AUTO_INCREMENT,
-  `login` VARCHAR(30) NOT NULL,
-  `password` VARCHAR(32) NOT NULL,
+  `idUsuario` INT(11) NOT NULL,
+  `login` VARCHAR(32) NOT NULL,
+  `password` VARCHAR(40) NOT NULL,
   `nickname` VARCHAR(40) NOT NULL,
   `email` VARCHAR(40) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC) VISIBLE)
+  PRIMARY KEY (`idUsuario`),
+  UNIQUE INDEX `email` (`email` ASC) VISIBLE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_spanish2_ci;
+DEFAULT CHARACTER SET = utf8;
 
 
 -- -----------------------------------------------------
 -- Table `platziblog`.`posts`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `platziblog`.`posts` (
-  `id` INT(11) NOT NULL,
-  `titulo` VARCHAR(45) NULL DEFAULT NULL,
-  `fecha_publicacion` TIMESTAMP NULL DEFAULT NULL,
+  `idPost` INT(11) NOT NULL,
+  `titulo` VARCHAR(150) NOT NULL,
+  `fecha_publicacion` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `contenido` TEXT NOT NULL,
-  `status` CHAR(8) NULL DEFAULT 'activo',
-  `usuario_id` INT(11) NOT NULL,
-  `categoria_id` INT(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `post_usuarios_idx` (`usuario_id` ASC) VISIBLE,
-  INDEX `post_categorias_idx` (`categoria_id` ASC) VISIBLE,
-  CONSTRAINT `post_categorias`
-    FOREIGN KEY (`categoria_id`)
-    REFERENCES `platziblog`.`categorias` (`id`)
+  `estatus` CHAR(8) NULL DEFAULT NULL,
+  `idUsuario` INT(11) NULL DEFAULT NULL,
+  `idCategoria` INT(11) NULL DEFAULT NULL,
+  PRIMARY KEY (`idPost`),
+  INDEX `idUsuario` (`idUsuario` ASC) VISIBLE,
+  INDEX `idCategoria` (`idCategoria` ASC) VISIBLE,
+  CONSTRAINT `posts_ibfk_1`
+    FOREIGN KEY (`idUsuario`)
+    REFERENCES `platziblog`.`usuarios` (`idUsuario`),
+  CONSTRAINT `posts_ibfk_2`
+    FOREIGN KEY (`idCategoria`)
+    REFERENCES `platziblog`.`categorias` (`idCategoria`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
+
+-- -----------------------------------------------------
+-- Table `platziblog`.`comentarios`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `platziblog`.`comentarios` (
+  `idComentario` INT(11) NOT NULL,
+  `comentario` TEXT NOT NULL,
+  `idUsuario` INT(11) NOT NULL,
+  `idPost` INT(11) NOT NULL,
+  PRIMARY KEY (`idComentario`),
+  INDEX `idUsuario` (`idUsuario` ASC) VISIBLE,
+  INDEX `idPost` (`idPost` ASC) VISIBLE,
+  CONSTRAINT `comentarios_ibfk_1`
+    FOREIGN KEY (`idUsuario`)
+    REFERENCES `platziblog`.`usuarios` (`idUsuario`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE,
-  CONSTRAINT `post_usuarios`
-    FOREIGN KEY (`usuario_id`)
-    REFERENCES `platziblog`.`usuarios` (`id`)
+  CONSTRAINT `comentarios_ibfk_2`
+    FOREIGN KEY (`idPost`)
+    REFERENCES `platziblog`.`posts` (`idPost`)
     ON DELETE NO ACTION
     ON UPDATE CASCADE)
 ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_spanish2_ci;
+DEFAULT CHARACTER SET = utf8;
 
-USE `platziblog` ;
 
 -- -----------------------------------------------------
--- Placeholder table for view `platziblog`.`platzi_people`
+-- Table `platziblog`.`etiquetas`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `platziblog`.`platzi_people` (`person_id` INT, `last_name` INT, `first_name` INT, `address` INT, `city` INT);
+CREATE TABLE IF NOT EXISTS `platziblog`.`etiquetas` (
+  `idEtiqueta` INT(11) NOT NULL,
+  `nombre_etiqueta` VARCHAR(30) NOT NULL,
+  PRIMARY KEY (`idEtiqueta`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
 
 -- -----------------------------------------------------
--- View `platziblog`.`platzi_people`
+-- Table `platziblog`.`posts_etiquetas`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `platziblog`.`platzi_people`;
-USE `platziblog`;
-CREATE  OR REPLACE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `platziblog`.`platzi_people` AS select `platziblog`.`people`.`person_id` AS `person_id`,`platziblog`.`people`.`last_name` AS `last_name`,`platziblog`.`people`.`first_name` AS `first_name`,`platziblog`.`people`.`address` AS `address`,`platziblog`.`people`.`city` AS `city` from `platziblog`.`people`;
+CREATE TABLE IF NOT EXISTS `platziblog`.`posts_etiquetas` (
+  `idPostEtiqueta` INT(11) NOT NULL,
+  `idPost` INT(11) NOT NULL,
+  `idEtiqueta` INT(11) NOT NULL,
+  PRIMARY KEY (`idPostEtiqueta`),
+  INDEX `idPost` (`idPost` ASC) VISIBLE,
+  INDEX `idEtiqueta` (`idEtiqueta` ASC) VISIBLE,
+  CONSTRAINT `posts_etiquetas_ibfk_1`
+    FOREIGN KEY (`idPost`)
+    REFERENCES `platziblog`.`posts` (`idPost`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE,
+  CONSTRAINT `posts_etiquetas_ibfk_2`
+    FOREIGN KEY (`idEtiqueta`)
+    REFERENCES `platziblog`.`etiquetas` (`idEtiqueta`)
+    ON DELETE NO ACTION
+    ON UPDATE CASCADE)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8;
+
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

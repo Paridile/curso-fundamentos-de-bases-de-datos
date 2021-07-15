@@ -92,5 +92,42 @@ ADD CONSTRAINT `post_categorias`
   ON UPDATE CASCADE;
 
 
+CREATE TABLE `platziblog`.`comentario` (
+  `id` INT NOT NULL,
+  `cuerpo_comentario` TEXT NOT NULL,
+  `usuario_id` INT NOT NULL,
+  `post_id` INT NOT NULL,
+  PRIMARY KEY (`id`));
+
+ALTER TABLE `platziblog`.`comentario` 
+ADD INDEX `comentario_usuario_idx` (`usuario_id` ASC);
+
+
+ALTER TABLE `platziblog`.`comentario` 
+ADD CONSTRAINT `comentario_usuario`
+  FOREIGN KEY (`usuario_id`)
+  REFERENCES `platziblog`.`usuarios` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+
+ALTER TABLE `platziblog`.`comentario` 
+ADD INDEX `comentario:post_idx` (`post_id` ASC);
+;
+ALTER TABLE `platziblog`.`comentario` 
+ADD CONSTRAINT `comentario:post`
+  FOREIGN KEY (`post_id`)
+  REFERENCES `platziblog`.`posts` (`id`)
+  ON DELETE NO ACTION
+  ON UPDATE NO ACTION;
+
+CREATE TABLE `platziblog`.`post_etiquetas` (
+  `id` INT NOT NULL,
+  `post_id` INT NOT NULL,
+  `etiqueta_id` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`));
+
+
+
 
 
