@@ -124,6 +124,7 @@ CREATE TABLE `platziblog`.`post_etiquetas` (
   `post_id` INT NOT NULL,
   `etiqueta_id` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
+  
 
 
 
