@@ -1,0 +1,55 @@
+{
+    "posts": [
+        {
+            "titulo": "Una noticia increible",
+            "contenido": "Este es un contenido de prueba",
+            "fecha_publicacion": "2021/07/15",
+            "estatus":"true",
+            "author": "/usuarios/0",
+            "categoria": "/categorias/1",
+            "etiquetas": [
+                {
+                    "nombre_etiqueta": "Telefonos moviles"
+                },
+                {
+                    "nombre_etiqueta": "Eventos"
+                }
+            ]
+        },
+        {
+            "titulo": "Otra noticia",
+            "contenido": "Este es otro contenido",
+            "fecha_publicacion": "2022/08/16",
+            "estatus":"true",
+            "author": "/usuarios/0",
+            "categoria":"/categorias/0",
+            "etiquetas": [
+                {
+                    "nombre_etiqueta": "Computacion"
+                },
+                {
+                    "nombre_etiqueta": "Automovilismo"
+                }
+            ]
+        }
+    ],
+    "categorias": [
+        {
+            "nombre_categoria": "deportes"
+        },
+        {
+            "nombre_categoria": "ciencia"
+        },
+        {
+            "nombre_categoria": "espectaculos"
+        }
+    ],
+    "usuarios": [
+        {
+            "login": "israel",
+            "password": "sdfnksfjkn",
+            "nickname": "Israel",
+            "email": "israel@platzi.com"
+        }
+    ]
+}

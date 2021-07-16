@@ -1,0 +1,77 @@
+{
+    "cliente": [
+        {
+            "nombre": "pablo",
+            "correo": "pablo@mail.com",
+            "contaseña": "asdad",
+            "direccion": [
+                {
+                    "nombre":"casa",
+                    "estado":"ejemplo estado",
+                    "municipio":"ejemplo municipio",
+                    "colonia": "ejemplo colonia",
+                    "calle": "ejemplo calle",
+                    "numero": "30"
+                }
+            ],
+            "pedidos": [
+                {
+                    "fecha":"2021-15-07",
+                    "forma-de-pago": "Efectivo",
+                    "repartidor":"/repartidor/0",
+                    "compras": [
+                        {
+                            "comida":"/restaurante/0/comida/0",                            
+                            "cantidad":"5"
+                        },
+                        {
+                            "comida":"/restaurante/0/comida/1",                            
+                            "cantidad":"1" 
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "repartidor": [
+        {
+            "nombre": "jose",
+            "correo": "jose@mail.com",
+            "contaseña": "qweqewewrw",
+            "cartera": "1500.60",
+            "ubicacion": [
+                {
+                    "latitud":"25.319007914765436",
+                    "longitud": "-97.86714002045466"
+                }
+            ]
+        }
+    ],
+    "restaurante": [
+        {
+            "nombre":"Tacos juan",
+            "direccion": [
+                {
+                    "nombre":"Tacos juan II",
+                    "estado":"ejemplo estado",
+                    "municipio":"ejemplo municipio",
+                    "colonia": "ejemplo colonia",
+                    "calle": "ejemplo calle",
+                    "numero": "20"
+                }
+            ],
+            "comida": [
+                {
+                    "nombre":"tacos",
+                    "tipo": "Mexicana",
+                    "precio": "12.00"
+                },
+                {
+                    "nombre":"quesadilla",
+                    "tipo": "Mexicana",
+                    "precio": "16.00"
+                }
+            ]
+        }
+    ]
+}

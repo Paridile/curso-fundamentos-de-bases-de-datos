@@ -1,5 +1,3 @@
---Consultar
-SELECT * FROM people;
 
 --Modificar tabla - Agregar columna
 ALTER TABLE `platziblog`.`people` 
@@ -126,6 +124,7 @@ CREATE TABLE `platziblog`.`post_etiquetas` (
   `post_id` INT NOT NULL,
   `etiqueta_id` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`id`));
+  
 
 
 
