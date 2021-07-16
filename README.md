@@ -113,7 +113,7 @@ El &uacute;ltimo proyecto del curso fue convertir esta base de datos a una no re
 </br>
 
 
-* [ddl.sql]("https://github.com/Paridile/curso-fundamentos-de-bases-de-datos/blob/main/ddl.sql" "ddl.sql"): Contiene algunos comandos realizados durante la creaci&oacute;n de la base de datos.
+* [ddl.sql](https://github.com/Paridile/curso-fundamentos-de-bases-de-datos/blob/main/ddl.sql "ddl.sql"): Contiene algunos comandos realizados durante la creaci&oacute;n de la base de datos.
 
 * [eats.json](https://github.com/Paridile/curso-fundamentos-de-bases-de-datos/blob/main/eats.json "eats.json"): Base de datos **no relacional** de mi proyecto de uber eats.
 
